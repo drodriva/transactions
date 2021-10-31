@@ -27,7 +27,7 @@ Embedded Redis runs in port 6379. If the application doesn't stop properly the p
 In Ubuntu run:
 
 ```
-lsof -i :6370
+> lsof -i :6379
 ```
 and then kill the idle process id where redis embedded is running
 
