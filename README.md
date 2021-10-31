@@ -5,6 +5,7 @@
 * Runs redis embedded locally for customers caching
 * TransactionController contains and api with paginated and sorted results example
 * It contains apis for some filtering examples, i.e transactions between dates or with amounts greater than a value.
+* Initial data is loaded on H2 database when starting the app. It's data.sql file.
 
 It runs in memory H2 database and redis embedded for caching purposes (not using redis repositories).
 
