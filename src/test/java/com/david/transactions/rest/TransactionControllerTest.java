@@ -126,8 +126,8 @@ public class TransactionControllerTest {
 	public void transactions_findTransaction_fromToDate() throws Exception {
 		
 		// given
-		final String from = "2015-09-17 18:47:52.69";
-		final String to = "2015-09-17 18:47:52.69";
+		final long from = 4587122L;
+		final long to = 99999999L;
 		
 		// when
 		mockMvc.perform(get("/v1/transactions/{from}/to/{to}", from, to).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))

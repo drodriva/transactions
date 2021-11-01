@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,18 +40,15 @@ public class TransactionController {
 	
 
 	@Operation(summary = "Get all the transactions", description = "Returns a list with all the transactions. It can be paginated and the results sorted")
-	@ApiResponses(value = { 
-	  @ApiResponse(responseCode = "200", description = "Successful operation", 
-	    content = { @Content(mediaType = "application/json", 
-	      array = @ArraySchema(schema = @Schema(implementation = Transaction.class)))}),
-	  @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
-    @GetMapping
-    public ResponseEntity<List<Transaction>> findAllTransactions(@RequestParam(defaultValue = "0") Integer pageNo, 
-            @RequestParam(defaultValue = "100") Integer pageSize,
-            @RequestParam(defaultValue = "date") String sortBy) {
-    	
-    	return ResponseEntity.ok(transactionService.findAllTransactions(pageNo, pageSize, sortBy));
-    }
+	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Successful operation", content = {
+			@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Transaction.class)))}),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
+	@GetMapping
+	public ResponseEntity<List<Transaction>> findAllTransactions(@RequestParam(defaultValue = "0") Integer pageNo,
+			@RequestParam(defaultValue = "100") Integer pageSize, @RequestParam(defaultValue = "date") String sortBy) {
+
+		return ResponseEntity.ok(transactionService.findAllTransactions(pageNo, pageSize, sortBy));
+	}
 	
     @Operation(summary = "Get a transaction by id", description = "Returns a single transaction by given id")
     @ApiResponses(value = {
@@ -98,11 +94,9 @@ public class TransactionController {
 			      array = @ArraySchema(schema = @Schema(implementation = Transaction.class)))}),
 			  @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)})
     @GetMapping("/{from}/to/{to}")
-	public ResponseEntity<List<Transaction>> getTransactionByDateBetween(
-			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS") Date from,
-			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS") Date to) {
+	public ResponseEntity<List<Transaction>> getTransactionByDateBetween(@PathVariable Long from, @PathVariable Long to) {
     	
-    	return ResponseEntity.ok(transactionService.findByDateBetween(from, to));
+    	return ResponseEntity.ok(transactionService.findByDateBetween(new Date(from), new Date(to)));
     }
     
     @Operation(summary = "Get all the given account transactions", description = "Returns a list with all the given account transactions")
